@@ -12,7 +12,7 @@ iris = load_iris()
 print(iris)
 
 #训练数据集
-#knn.fit(iris.data,iris.target)
+#knn.fit(iris.txt,iris.target)
 
 #预测
 #predict = knn.predict([[0.1,0.2,0.3,0.4]])

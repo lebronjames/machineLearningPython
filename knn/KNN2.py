@@ -39,6 +39,35 @@ def getResult(neighbors):
     sortedVotes = sorted(classVotes.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sortedVotes[0][0]
 
+def main():
+    trainingSet = []  # 训练数据集
+    testSet = []  # 测试数据集
+    splitRatio = 0.75  # 分割的比例
+    filename = r"./iris.txt"
+    with open(filename,'rt') as datafile:
+        lines = csv.reader(datafile)
+        print("-------------------",lines)
+        dataSet = list(lines)
+        for x in range(len(dataSet)-1):
+            for y in range(4):
+                dataSet[x][y] = float(dataSet[x][y])
+            if(random.random() < splitRatio):
+                trainingSet.append(dataSet[x])
+            else:
+                testSet.append(dataSet[x])
+    print("trainingSet len:",len(trainingSet))
+    print("testSet len:", len(testSet))
 
+    results = []
+    for i in range(len(testSet)):
+        neighbors = getNeighbors(trainingSet,testSet[i],3)
+        result = getResult(neighbors)
+        results.append(result)
+        print("期望值：",testSet[i][-1],"实际值：",result)
+    correct = 0
+    for i in range(len(results)):
+        if(results[i] == testSet[i][-1]):
+            correct += 1
+    print("准确率：",correct/float(len(results))*100,"%")
 
-
+main()
